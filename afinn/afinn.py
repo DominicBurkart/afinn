@@ -289,27 +289,24 @@ class Afinn(object):
         words = self._pattern.findall(text.lower())
         return words
 
+    #code for cleaning up strings (in dictionaries and in tweets)
+    punctuation = '''!"#$%&'()*+,-./:;<=>?[\]^_`{|}~'''#missing @ at the request of Julian
+    def clean(instring, spaces = True): #removes punctuation and double spaces, replacing them w/ single spaces
+        instring.replace("\n"," ")
+        for x in punctuation:
+                instring = instring.replace(x, " ")
+        if spaces:
+            while instring.find("  ") > -1:
+                instring = instring.replace("  ", " ")
+        else:
+            while instring.find(" ") > -1:
+                instring = instring.replace(" ","")
+        instring = instring.lower()
+        return instring
+
     def split(self, text):
-        """Split a string into words.
-
-        Parameters
-        ----------
-        text : str
-            String with text that should be split
-
-        Returns
-        -------
-        wordlist : list of str
-            List of words
-
-        Examples
-        --------
-        >>> afinn = Afinn()
-        >>> afinn.split('Hello, world!')
-        ['Hello', 'world']
-
-        """
-        wordlist = self._word_pattern.findall(text)
+        '''modified to call "clean," which will destroy emoticons but will allow for more precise word tokenization.'''
+        wordlist = clean(line[tw_content_indx]).split(" ")
         return wordlist
 
     def find_valence(self, word_scores):
