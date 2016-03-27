@@ -312,6 +312,25 @@ class Afinn(object):
         wordlist = self._word_pattern.findall(text)
         return wordlist
 
+    def find_valence(self, word_scores):
+        '''splits words to find valence. Called by other methods.
+
+           sets and resets valenceScores, which can be called to yield the valence scores (positive, negative, sum) for the most recent input.
+           
+           Added by Dominic Burkart (dominicburkart@gmail.com).'''
+
+        valenceScores = [0,0,0]
+        
+        for score in word_scores:
+            if score > 0:
+                valenceScores[0] += score
+            elif score < 0:
+                valenceScores[1] += score
+                
+            valenceScores[2] += score
+
+        return valenceScores
+
     def score_with_pattern(self, text):
         """Score text based on pattern matching.
 
@@ -335,7 +354,8 @@ class Afinn(object):
         # TODO: ":D" is not matched
         words = self.find_all(text)
         word_scores = (self._dict[word] for word in words)
-        score = float(sum(word_scores))
+        score = self.find_valence(word_scores)
+
         return score
 
     def score_with_wordlist(self, text):
@@ -356,7 +376,11 @@ class Afinn(object):
         """
         words = self.split(text)
         word_scores = (self._dict.get(word.lower(), 0.0) for word in words)
+
         score = float(sum(word_scores))
+        
+        self.find_valence(word_scores)
+
         return score
 
     score = score_with_pattern
