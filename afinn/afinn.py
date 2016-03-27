@@ -325,7 +325,7 @@ class Afinn(object):
             if score > 0:
                 valenceScores[0] += score
             elif score < 0:
-                valenceScores[1] += score
+                valenceScores[1] += abs(score) #absolute value taken for easier statistical manipulation, requested by julian
                 
             valenceScores[2] += score
 
