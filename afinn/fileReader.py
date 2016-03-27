@@ -1,7 +1,6 @@
 ''' AFINN file encoder! takes an input file and appends AFINN scores to it! '''
 
 import csv
-import os
 from afinn import *
 
 inputfiledir = input("data file directory: ")
