@@ -1,4 +1,6 @@
-''' AFINN file encoder! takes an input file and appends AFINN scores to it! '''
+''' AFINN file encoder! takes an input file and appends AFINN scores to it!
+
+expects first row of input file to be header.'''
 
 import csv
 from afinn import *
@@ -13,7 +15,8 @@ afinn = Afinn()
 
 #opens our input and output files
 indoc = open(inputfiledir, encoding = "utf-8")
-outdoc= csv.writer(open("no_emoji_out.csv", mode = "w", encoding = "utf-8"), lineterminator ="\n")
+out = open("AFINN_out.txt", mode = "w", encoding = "utf-8")
+outdoc= csv.writer(out, lineterminator ="\n")
 
 def encode(line):
     txt = line[tw_content_indx]
@@ -31,5 +34,7 @@ for line in csv.reader(indoc):
         inheader = False
     else: #to count words + ratios for each tweet and then write those values to out :)
         encode(line)
+
+out.close()
 print("\nencoding complete.")
 
