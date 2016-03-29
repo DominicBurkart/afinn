@@ -15,7 +15,7 @@ afinn = Afinn()
 
 #opens our input and output files
 indoc = open(inputfiledir, encoding = "utf-8")
-out = open("AFINN_out.txt", mode = "w", encoding = "utf-8")
+out = open("AFINN_out.csv", mode = "w", encoding = "utf-8")
 outdoc= csv.writer(out, lineterminator ="\n")
 
 def encode(line):
