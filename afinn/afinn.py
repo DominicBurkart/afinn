@@ -344,6 +344,7 @@ class Afinn(object):
 
         Returns
         -------
+        //MODIFIED to return a list of three scores (positive, negative, sum)
         score : float
             Sentiment analysis score for text
 
